@@ -1,4 +1,5 @@
 export interface TrialBase {
+  id: string;
   product: string;
   subscriptionStart: string;
 }
@@ -26,24 +27,28 @@ export interface LearningBanner {
 
 export const activeTrials: ActiveTrial[] = [
   {
+    id: 'openshift-sandbox',
     product: 'Red Hat OpenShift Platform Plus for Developers Sandbox',
     subscriptionStart: '2025-08-23',
     daysLeft: 160,
     totalDays: 180,
   },
   {
+    id: 'openshift-container-platform',
     product: 'Red Hat OpenShift Container Platform',
     subscriptionStart: '2025-07-23',
     daysLeft: 27,
     totalDays: 60,
   },
   {
+    id: 'rhel-sap',
     product: 'Red Hat Enterprise Linux for SAP',
     subscriptionStart: '2025-07-29',
     daysLeft: 9,
     totalDays: 60,
   },
   {
+    id: 'developer-suite',
     product: 'Red Hat Developer Suite',
     subscriptionStart: '2025-06-15',
     daysLeft: 45,
@@ -53,26 +58,38 @@ export const activeTrials: ActiveTrial[] = [
 
 export const expiredTrials: ExpiredTrial[] = [
   {
+    id: 'rhel-server',
     product: 'Red Hat Enterprise Linux Server',
     subscriptionStart: '2022-12-09',
     renewalOpenBy: '2023-12-09',
   },
   {
+    id: 'acm-k8s',
     product: 'Red Hat Advanced Cluster Management for Kubernetes',
     subscriptionStart: '2019-10-17',
     renewalOpenBy: '2020-10-17',
   },
   {
+    id: 'ansible-automation',
     product: 'Red Hat Ansible Automation Platform',
     subscriptionStart: '2023-03-01',
     renewalOpenBy: '2024-03-01',
   },
   {
+    id: 'openshift-data-foundation',
     product: 'Red Hat OpenShift Data Foundation',
     subscriptionStart: '2022-06-10',
     renewalOpenBy: '2023-06-10',
   },
 ];
+
+export function getTrialById(
+  id: string
+): ActiveTrial | ExpiredTrial | undefined {
+  const active = activeTrials.find((t) => t.id === id);
+  if (active) return active;
+  return expiredTrials.find((t) => t.id === id);
+}
 
 export const learningResources: LearningResource[] = [
   {

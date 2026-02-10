@@ -1,4 +1,4 @@
-import { LitElement, css, html } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import {
   activeTrials,
@@ -7,250 +7,218 @@ import {
   learningResources,
 } from './data/trials.js';
 
+const trialsDashboardStyles = `
+  trials-dashboard {
+    display: block;
+    max-width: var(--max-width, 1200px);
+    margin: 0 auto;
+    padding: var(--spacing, 1rem) 1.5rem 2rem;
+  }
+  trials-dashboard .breadcrumbs {
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted, #4a4a4a);
+  }
+  trials-dashboard .breadcrumbs a {
+    color: var(--color-link, #0066cc);
+  }
+  trials-dashboard .breadcrumbs span:last-child {
+    color: var(--color-text, #151515);
+  }
+  trials-dashboard .page-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  trials-dashboard .intro {
+    margin: 0 0 2rem;
+    color: var(--color-text-muted, #4a4a4a);
+    max-width: 60ch;
+  }
+  trials-dashboard .section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+  }
+  trials-dashboard .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 2.5rem;
+  }
+  trials-dashboard table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  trials-dashboard th,
+  trials-dashboard td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-border, #d2d2d2);
+    vertical-align: middle;
+  }
+  trials-dashboard th {
+    font-weight: 600;
+    color: var(--color-text, #151515);
+  }
+  trials-dashboard .th-with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  trials-dashboard .info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: var(--color-border, #d2d2d2);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--color-text-muted, #4a4a4a);
+    cursor: default;
+  }
+  trials-dashboard .days-cell {
+    min-width: 140px;
+  }
+  trials-dashboard .progress-track {
+    height: 8px;
+    background: var(--color-progress-track, #e8e8e8);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+    min-width: 80px;
+  }
+  trials-dashboard .progress-fill {
+    height: 100%;
+    background: var(--color-primary-bg, #0066cc);
+    border-radius: 4px;
+    transition: width 0.2s ease;
+  }
+  trials-dashboard .actions-cell {
+    white-space: nowrap;
+  }
+  trials-dashboard .actions-cell a {
+    margin-right: 1rem;
+  }
+  trials-dashboard .btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: var(--radius, 4px);
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  trials-dashboard .btn-primary {
+    background: var(--color-primary-bg, #0066cc);
+    color: white;
+  }
+  trials-dashboard .btn-primary:hover {
+    background: var(--color-primary-bg-hover, #004080);
+    color: white;
+  }
+  trials-dashboard .btn-outline {
+    background: transparent;
+    color: var(--color-primary-bg, #0066cc);
+    border: 1px solid var(--color-primary-bg, #0066cc);
+  }
+  trials-dashboard .btn-outline:hover {
+    background: rgba(0, 102, 204, 0.08);
+  }
+  trials-dashboard .learning-section {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border, #d2d2d2);
+  }
+  trials-dashboard .learning-intro {
+    margin: 0 0 1.5rem;
+    color: var(--color-text-muted, #4a4a4a);
+    max-width: 50ch;
+  }
+  trials-dashboard .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  trials-dashboard .card {
+    padding: 1.25rem;
+    background: var(--color-bg, #fff);
+    border: 1px solid var(--color-border, #d2d2d2);
+    border-radius: var(--radius, 4px);
+  }
+  trials-dashboard .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  trials-dashboard .card-desc {
+    font-size: 0.875rem;
+    color: var(--color-text-muted, #4a4a4a);
+    margin: 0 0 1rem;
+    line-height: 1.5;
+  }
+  trials-dashboard .banner {
+    background: var(--color-banner-bg, #1a1a2e);
+    color: white;
+    padding: 2rem;
+    border-radius: var(--radius, 4px);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: center;
+  }
+  @media (min-width: 640px) {
+    trials-dashboard .banner {
+      grid-template-columns: 1fr auto;
+    }
+  }
+  trials-dashboard .banner-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  trials-dashboard .banner-content p {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    opacity: 0.9;
+    line-height: 1.5;
+  }
+  trials-dashboard .banner .btn-outline {
+    color: white;
+    border-color: white;
+  }
+  trials-dashboard .banner .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+  trials-dashboard .banner-image {
+    min-height: 120px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius, 4px);
+    display: none;
+  }
+  @media (min-width: 640px) {
+    trials-dashboard .banner-image {
+      display: block;
+      width: 200px;
+      height: 120px;
+    }
+  }
+`;
+
 @customElement('trials-dashboard')
 export class TrialsDashboard extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      max-width: var(--max-width, 1200px);
-      margin: 0 auto;
-      padding: var(--spacing, 1rem) 1.5rem 2rem;
-    }
-
-    .breadcrumbs {
-      margin-bottom: 0.75rem;
-      font-size: 0.875rem;
-      color: var(--color-text-muted, #4a4a4a);
-    }
-
-    .breadcrumbs a {
-      color: var(--color-link, #0066cc);
-    }
-
-    .breadcrumbs span:last-child {
-      color: var(--color-text, #151515);
-    }
-
-    .page-title {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin: 0 0 0.5rem;
-    }
-
-    .intro {
-      margin: 0 0 2rem;
-      color: var(--color-text-muted, #4a4a4a);
-      max-width: 60ch;
-    }
-
-    .section-title {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin: 0 0 1rem;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      margin-bottom: 2.5rem;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.875rem;
-    }
-
-    th,
-    td {
-      text-align: left;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--color-border, #d2d2d2);
-      vertical-align: middle;
-    }
-
-    th {
-      font-weight: 600;
-      color: var(--color-text, #151515);
-    }
-
-    .th-with-icon {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
-    .info-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 1rem;
-      height: 1rem;
-      border-radius: 50%;
-      background: var(--color-border, #d2d2d2);
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: var(--color-text-muted, #4a4a4a);
-      cursor: default;
-    }
-
-    .days-cell {
-      min-width: 140px;
-    }
-
-    .progress-track {
-      height: 8px;
-      background: var(--color-progress-track, #e8e8e8);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 0.25rem;
-      min-width: 80px;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--color-primary-bg, #0066cc);
-      border-radius: 4px;
-      transition: width 0.2s ease;
-    }
-
-    .actions-cell {
-      white-space: nowrap;
-    }
-
-    .actions-cell a {
-      margin-right: 1rem;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      font-family: inherit;
-      border-radius: var(--radius, 4px);
-      cursor: pointer;
-      text-decoration: none;
-      border: none;
-      transition: background-color 0.2s, color 0.2s;
-    }
-
-    .btn-primary {
-      background: var(--color-primary-bg, #0066cc);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--color-primary-bg-hover, #004080);
-      color: white;
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--color-primary-bg, #0066cc);
-      border: 1px solid var(--color-primary-bg, #0066cc);
-    }
-
-    .btn-outline:hover {
-      background: rgba(0, 102, 204, 0.08);
-    }
-
-    /* Learning support */
-    .learning-section {
-      margin-top: 2.5rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--color-border, #d2d2d2);
-    }
-
-    .learning-intro {
-      margin: 0 0 1.5rem;
-      color: var(--color-text-muted, #4a4a4a);
-      max-width: 50ch;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .card {
-      padding: 1.25rem;
-      background: var(--color-bg, #fff);
-      border: 1px solid var(--color-border, #d2d2d2);
-      border-radius: var(--radius, 4px);
-    }
-
-    .card-title {
-      font-size: 1rem;
-      font-weight: 600;
-      margin: 0 0 0.5rem;
-    }
-
-    .card-desc {
-      font-size: 0.875rem;
-      color: var(--color-text-muted, #4a4a4a);
-      margin: 0 0 1rem;
-      line-height: 1.5;
-    }
-
-    .banner {
-      background: var(--color-banner-bg, #1a1a2e);
-      color: white;
-      padding: 2rem;
-      border-radius: var(--radius, 4px);
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      align-items: center;
-    }
-
-    @media (min-width: 640px) {
-      .banner {
-        grid-template-columns: 1fr auto;
-      }
-    }
-
-    .banner-content h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-
-    .banner-content p {
-      margin: 0 0 1rem;
-      font-size: 0.875rem;
-      opacity: 0.9;
-      line-height: 1.5;
-    }
-
-    .banner .btn-outline {
-      color: white;
-      border-color: white;
-    }
-
-    .banner .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .banner-image {
-      min-height: 120px;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius, 4px);
-      display: none;
-    }
-
-    @media (min-width: 640px) {
-      .banner-image {
-        display: block;
-        width: 200px;
-        height: 120px;
-      }
-    }
-  `;
+  override createRenderRoot() {
+    return this;
+  }
 
   render() {
     return html`
+      <style>${trialsDashboardStyles}</style>
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="#">Home</a>
         <span> &gt; </span>
@@ -296,7 +264,7 @@ export class TrialsDashboard extends LitElement {
                     </div>
                   </td>
                   <td class="actions-cell">
-                    <a href="#">View more</a>
+                    <a href="/trial/${trial.id}">View more</a>
                     <button class="btn btn-primary" type="button">
                       Manage subscription
                     </button>
@@ -332,7 +300,7 @@ export class TrialsDashboard extends LitElement {
                   <td>${trial.subscriptionStart}</td>
                   <td><a href="#">${trial.renewalOpenBy}</a></td>
                   <td class="actions-cell">
-                    <a href="#">View more</a>
+                    <a href="/trial/${trial.id}">View more</a>
                     <button class="btn btn-primary" type="button">
                       Renew subscription
                     </button>

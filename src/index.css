@@ -46,3 +46,9 @@ a:hover {
   color: var(--color-link-hover);
   text-decoration: underline;
 }
+
+/* View Transitions API: cross-fade between dashboard and trial detail */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.25s;
+}
