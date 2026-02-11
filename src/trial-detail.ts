@@ -109,6 +109,7 @@ export class TrialDetail extends LitElement {
     if (!trial) {
       return html`
         <style>${trialDetailStyles}</style>
+        <div class="trial-detail-content" style="view-transition-name: trial-detail-content">
         <nav class="breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a>
           <span> &gt; </span>
@@ -121,6 +122,7 @@ export class TrialDetail extends LitElement {
           No trial was found for this link.
           <a href="/">Back to trials</a>
         </p>
+        </div>
       `;
     }
 
@@ -128,6 +130,7 @@ export class TrialDetail extends LitElement {
 
     return html`
       <style>${trialDetailStyles}</style>
+      <div class="trial-detail-content" style="view-transition-name: trial-detail-content">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span> &gt; </span>
@@ -178,6 +181,7 @@ export class TrialDetail extends LitElement {
         <button class="btn btn-primary" type="button">
           ${active ? 'Manage subscription' : 'Renew subscription'}
         </button>
+      </div>
       </div>
     `;
   }

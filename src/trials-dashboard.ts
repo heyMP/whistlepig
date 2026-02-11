@@ -219,6 +219,7 @@ export class TrialsDashboard extends LitElement {
   render() {
     return html`
       <style>${trialsDashboardStyles}</style>
+      <div class="dashboard-content" style="view-transition-name: dashboard-content">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="#">Home</a>
         <span> &gt; </span>
@@ -338,6 +339,7 @@ export class TrialsDashboard extends LitElement {
           <div class="banner-image" aria-hidden="true"></div>
         </div>
       </section>
+      </div>
     `;
   }
 }

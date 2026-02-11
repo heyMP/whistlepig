@@ -64,6 +64,7 @@ export class AppShell extends LitElement {
       document.startViewTransition(async () => {
         update();
         await this.updateComplete;
+        await new Promise(res => setTimeout(res, 1000));
       });
     } else {
       update();
@@ -86,7 +87,9 @@ export class AppShell extends LitElement {
         await this.updateComplete;
       };
       if (typeof document.startViewTransition === 'function') {
-        document.startViewTransition(doNavigate);
+        document.startViewTransition(async () => {
+          doNavigate();
+        });
       } else {
         doNavigate();
       }
