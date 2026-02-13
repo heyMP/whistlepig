@@ -17,6 +17,7 @@
   --max-width: 1200px;
   --spacing: 1rem;
   --radius: 4px;
+
   --animation-slide-length: 20px;
   --animation-slide-duration: 0.15s;
 
@@ -53,56 +54,82 @@ a:hover {
 ::view-transition-old(root) {
   animation: var(--animation-slide-duration) ease-in-out both view-transition-out;
 }
+
 ::view-transition-new(root) {
   animation: var(--animation-slide-duration) ease-in-out both view-transition-in;
   animation-delay: 0.2s;
 }
+
 /* Dashboard content slides left as a unit when navigating away */
 ::view-transition-old(dashboard-content) {
   animation: var(--animation-slide-duration) ease-in-out both dashboard-slide-left;
 }
+
 ::view-transition-new(dashboard-content) {
   animation: var(--animation-slide-duration) ease-in-out both dashboard-slide-in;
   animation-delay: 0.2s;
 }
+
 /* Trial detail content slides right when navigating away (back to dashboard) */
 ::view-transition-old(trial-detail-content) {
   animation: var(--animation-slide-duration) ease-out both trial-detail-slide-right;
 }
+
 ::view-transition-new(trial-detail-content) {
   animation: var(--animation-slide-duration) ease-out both trial-detail-slide-in;
   animation-delay: 0.2s;
 }
+
+/* Product name morph between dashboard table cell and detail h1 */
+::view-transition-group(product-name) {
+  animation-duration: calc(var(--animation-slide-duration) * 2.5);
+  animation-timing-function: ease-in-out;
+}
+
+::view-transition-old(product-name) {
+  animation: none;
+  opacity: 0;
+}
+
+::view-transition-new(product-name) {
+  animation: none;
+}
+
 @keyframes view-transition-out {
   to {
     opacity: 0;
     transform: translateX(calc(var(--animation-slide-length) * -1)) scale(0.98);
   }
 }
+
 @keyframes view-transition-in {
   from {
     opacity: 0;
     transform: translateX(var(--animation-slide-length)) scale(0.98);
   }
 }
+
 @keyframes dashboard-slide-left {
   to {
     opacity: 0;
     transform: translateX(calc(var(--animation-slide-length) * -1));
   }
 }
+
 @keyframes dashboard-slide-in {
   from {
     opacity: 0;
     transform: translateX(calc(var(--animation-slide-length) * -1));
   }
 }
+
 @keyframes trial-detail-slide-right {
   to {
     opacity: 0;
     transform: translateX(var(--animation-slide-length));
   }
 }
+
 @keyframes trial-detail-slide-in {
   from {
     opacity: 0;

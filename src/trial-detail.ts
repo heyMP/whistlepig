@@ -141,7 +141,7 @@ export class TrialDetail extends LitElement {
         <span>${trial.product}</span>
       </nav>
 
-      <h1 class="page-title">${trial.product}</h1>
+      <h1 class="page-title" style="view-transition-name: product-name">${trial.product}</h1>
 
       <div class="detail-block">
         <div class="detail-label">Subscription start</div>

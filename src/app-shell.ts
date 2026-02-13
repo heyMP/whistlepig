@@ -53,22 +53,62 @@ export class AppShell extends LitElement {
     this.requestUpdate();
   }
 
-  private _handlePopstate(): void {
-    const path = location.pathname;
-    const next = parsePathname(path);
-    const update = (): void => {
-      this._route = next;
-      this.requestUpdate();
-    };
-    if (typeof document.startViewTransition === 'function') {
-      document.startViewTransition(async () => {
-        update();
-        await this.updateComplete;
-        await new Promise(res => setTimeout(res, 1000));
-      });
-    } else {
-      update();
+  private _viewTransition(
+    oldRoute: ReturnType<typeof parsePathname>,
+    newRoute: ReturnType<typeof parsePathname>,
+    domUpdate: () => void
+  ): void {
+    const trialId =
+      oldRoute.view === 'trial'
+        ? oldRoute.id
+        : newRoute.view === 'trial'
+          ? newRoute.id
+          : undefined;
+
+    if (typeof document.startViewTransition !== 'function') {
+      domUpdate();
+      return;
     }
+
+    // Forward (dashboard -> detail): tag the product <td> before capturing old state
+    if (trialId && oldRoute.view === 'dashboard') {
+      const td = this.querySelector(
+        `[data-trial-product="${trialId}"]`
+      ) as HTMLElement | null;
+      if (td) td.style.viewTransitionName = 'product-name';
+    }
+
+    const transition = document.startViewTransition(async () => {
+      domUpdate();
+      await this.updateComplete;
+
+      // Backward (detail -> dashboard): tag the product <td> after new DOM renders
+      if (trialId && newRoute.view === 'dashboard') {
+        const td = this.querySelector(
+          `[data-trial-product="${trialId}"]`
+        ) as HTMLElement | null;
+        if (td) td.style.viewTransitionName = 'product-name';
+      }
+    });
+
+    // Clean up after transition finishes
+    transition.finished.then(() => {
+      if (trialId) {
+        const td = this.querySelector(
+          `[data-trial-product="${trialId}"]`
+        ) as HTMLElement | null;
+        if (td) td.style.viewTransitionName = '';
+      }
+    });
+  }
+
+  private _handlePopstate(): void {
+    const oldRoute = this._route;
+    const newRoute = parsePathname(location.pathname);
+    this._viewTransition(oldRoute, newRoute, () => {
+      this._route = newRoute;
+      this.requestUpdate();
+    });
   }
 
   private _handleClick(e: Event): void {
@@ -82,17 +122,9 @@ export class AppShell extends LitElement {
       if (path !== '/' && path !== '' && !/^\/trial\/[^/]+$/.test(path)) return;
       e.preventDefault();
       const newPath = path || '/';
-      const doNavigate = async (): Promise<void> => {
+      this._viewTransition(this._route, parsePathname(newPath), () => {
         this.navigate(newPath);
-        await this.updateComplete;
-      };
-      if (typeof document.startViewTransition === 'function') {
-        document.startViewTransition(async () => {
-          doNavigate();
-        });
-      } else {
-        doNavigate();
-      }
+      });
     } catch {
       // ignore invalid URLs
     }

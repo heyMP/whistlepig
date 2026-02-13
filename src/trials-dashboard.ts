@@ -253,7 +253,7 @@ export class TrialsDashboard extends LitElement {
             ${activeTrials.map(
               (trial) => html`
                 <tr>
-                  <td>${trial.product}</td>
+                  <td data-trial-product="${trial.id}">${trial.product}</td>
                   <td>${trial.subscriptionStart}</td>
                   <td class="days-cell">
                     ${trial.daysLeft}
@@ -297,7 +297,7 @@ export class TrialsDashboard extends LitElement {
             ${expiredTrials.map(
               (trial) => html`
                 <tr>
-                  <td>${trial.product}</td>
+                  <td data-trial-product="${trial.id}">${trial.product}</td>
                   <td>${trial.subscriptionStart}</td>
                   <td><a href="#">${trial.renewalOpenBy}</a></td>
                   <td class="actions-cell">
