@@ -11,24 +11,7 @@ const trialsDashboardStyles = `
   trials-dashboard {
     display: block;
     max-width: var(--max-width, 1200px);
-    margin: 0 auto;
     padding: var(--spacing, 1rem) 1.5rem 2rem;
-  }
-  trials-dashboard .breadcrumbs {
-    margin-bottom: 0.75rem;
-    font-size: 0.875rem;
-    color: var(--color-text-muted, #4a4a4a);
-  }
-  trials-dashboard .breadcrumbs a {
-    color: var(--color-link, #0066cc);
-  }
-  trials-dashboard .breadcrumbs span:last-child {
-    color: var(--color-text, #151515);
-  }
-  trials-dashboard .page-title {
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem;
   }
   trials-dashboard .intro {
     margin: 0 0 2rem;

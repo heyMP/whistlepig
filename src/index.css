@@ -92,7 +92,7 @@ a:hover {
 }
 
 ::view-transition-new(product-name) {
-  animation: none;
+  opacity: 1;
 }
 
 @keyframes view-transition-out {
@@ -135,4 +135,31 @@ a:hover {
     opacity: 0;
     transform: translateX(var(--animation-slide-length));
   }
+}
+
+/**
+ * Breadcrumbs
+ */
+.breadcrumbs {
+  view-transition-name: breadcrumbs;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted, #4a4a4a);
+}
+
+.breadcrumbs a {
+  color: var(--color-link, #0066cc);
+}
+
+.breadcrumbs span:last-child {
+  color: var(--color-text, #151515);
+}
+
+/**
+ * Page Title
+ */
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
 }

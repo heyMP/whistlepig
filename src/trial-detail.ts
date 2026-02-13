@@ -13,24 +13,7 @@ const trialDetailStyles = `
   trial-detail {
     display: block;
     max-width: var(--max-width, 1200px);
-    margin: 0 auto;
     padding: var(--spacing, 1rem) 1.5rem 2rem;
-  }
-  trial-detail .breadcrumbs {
-    margin-bottom: 0.75rem;
-    font-size: 0.875rem;
-    color: var(--color-text-muted, #4a4a4a);
-  }
-  trial-detail .breadcrumbs a {
-    color: var(--color-link, #0066cc);
-  }
-  trial-detail .breadcrumbs span:last-child {
-    color: var(--color-text, #151515);
-  }
-  trial-detail .page-title {
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin: 0 0 1.5rem;
   }
   trial-detail .detail-block {
     margin-bottom: 1.5rem;

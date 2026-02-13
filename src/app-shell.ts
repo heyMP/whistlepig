@@ -15,6 +15,8 @@ const appShellStyles = `
   app-shell {
     display: block;
     min-height: 100vh;
+    max-width: 1200px;
+    margin-inline: auto;
   }
   app-shell .app-view {
     min-height: 100vh;
