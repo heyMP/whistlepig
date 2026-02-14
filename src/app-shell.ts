@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { ScrollRestorationController } from './controllers/scroll-restoration-controller.js';
 import './trials-dashboard.js';
 import './trial-detail.js';
 
@@ -33,37 +34,20 @@ export class AppShell extends LitElement {
     typeof location !== 'undefined' ? location.pathname : '/'
   );
 
+  private _scroll = new ScrollRestorationController(this);
   private _boundPopstate = () => this._handlePopstate();
   private _boundClick = (e: Event) => this._handleClick(e);
-  private _boundScroll = () => this._handleScroll();
-  private _scrollTimer: ReturnType<typeof setTimeout> | undefined;
-  private _scrollMap = new Map<string, number>();
 
   override connectedCallback(): void {
     super.connectedCallback();
-    history.scrollRestoration = 'manual';
     window.addEventListener('popstate', this._boundPopstate);
     window.addEventListener('click', this._boundClick, true);
-    window.addEventListener('scroll', this._boundScroll, { passive: true });
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     window.removeEventListener('popstate', this._boundPopstate);
     window.removeEventListener('click', this._boundClick, true);
-    window.removeEventListener('scroll', this._boundScroll);
-    clearTimeout(this._scrollTimer);
-  }
-
-  private _saveScrollPosition(): void {
-    const y = window.scrollY;
-    this._scrollMap.set(location.pathname, y);
-    history.replaceState({ ...history.state, scrollY: y }, '');
-  }
-
-  private _handleScroll(): void {
-    clearTimeout(this._scrollTimer);
-    this._scrollTimer = setTimeout(() => this._saveScrollPosition(), 100);
   }
 
   navigate(path: string): void {
@@ -129,7 +113,7 @@ export class AppShell extends LitElement {
   }
 
   private _handlePopstate(): void {
-    const scrollY = history.state?.scrollY ?? this._scrollMap.get(location.pathname) ?? 0;
+    const scrollY = history.state?.scrollY ?? this._scroll.getScrollForPath(location.pathname);
     const oldRoute = this._route;
     const newRoute = parsePathname(location.pathname);
     this._viewTransition(oldRoute, newRoute, () => {
@@ -149,8 +133,8 @@ export class AppShell extends LitElement {
       if (path !== '/' && path !== '' && !/^\/trial\/[^/]+$/.test(path)) return;
       e.preventDefault();
       const newPath = path || '/';
-      this._saveScrollPosition();
-      const savedScroll = this._scrollMap.get(newPath) ?? 0;
+      this._scroll.save();
+      const savedScroll = this._scroll.getScrollForPath(newPath);
       this._viewTransition(this._route, parsePathname(newPath), () => {
         this.navigate(newPath);
       }, savedScroll);
