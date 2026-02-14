@@ -36,11 +36,17 @@ const trialDetailStyles = `
     margin-top: 0.25rem;
     max-width: 200px;
   }
+  @keyframes progressFillIn {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
   trial-detail .progress-fill {
     height: 100%;
     background: var(--color-primary-bg, #0066cc);
     border-radius: 4px;
     transition: width 0.2s ease;
+    transform-origin: left;
+    animation: progressFillIn 0.4s ease-out;
   }
   trial-detail .actions {
     display: flex;

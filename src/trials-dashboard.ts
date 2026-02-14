@@ -72,11 +72,17 @@ const trialsDashboardStyles = `
     margin-top: 0.25rem;
     min-width: 80px;
   }
+  @keyframes progressFillIn {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
   trials-dashboard .progress-fill {
     height: 100%;
     background: var(--color-primary-bg, #0066cc);
     border-radius: 4px;
     transition: width 0.2s ease;
+    transform-origin: left;
+    animation: progressFillIn 0.4s ease-out;
   }
   trials-dashboard .actions-cell {
     white-space: nowrap;
