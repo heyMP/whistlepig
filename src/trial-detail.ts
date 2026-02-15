@@ -71,15 +71,7 @@ export class TrialDetail extends LitElement {
       return html`
         <style>${trialDetailStyles}</style>
         <div class="trial-detail-content" style="view-transition-name: trial-detail-content">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <a href="/">Home</a>
-          <span> &gt; </span>
-          <a href="/">Red Hat</a>
-          <span> &gt; </span>
-          <a href="/">Trials</a>
-        </nav>
         <div class="detail-card">
-          <h1 class="page-title">Trial not found</h1>
           <p class="not-found">
             No trial was found for this link.
             <a href="/">Back to trials</a>
@@ -94,18 +86,7 @@ export class TrialDetail extends LitElement {
     return html`
       <style>${trialDetailStyles}</style>
       <div class="trial-detail-content" style="view-transition-name: trial-detail-content">
-      <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <a href="/">Home</a>
-        <span> &gt; </span>
-        <a href="/">Red Hat</a>
-        <span> &gt; </span>
-        <a href="/">Trials</a>
-        <span> &gt; </span>
-        <span>${trial.product}</span>
-      </nav>
-
       <div class="detail-card">
-        <h1 class="page-title" style="view-transition-name: product-name">${trial.product}</h1>
 
         <div class="detail-block">
           <div class="detail-label">Subscription start</div>
@@ -143,7 +124,7 @@ export class TrialDetail extends LitElement {
         <div class="actions">
           <a href="/">Back to trials</a>
           <button class="btn btn-primary" type="button">
-            ${active ? 'Manage subscription' : 'Renew subscription'}
+            ${active ? 'Manage subscription' : 'Ready to buy'}
           </button>
         </div>
       </div>

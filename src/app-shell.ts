@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { ScrollRestorationController } from './controllers/scroll-restoration-controller.js';
+import { getTrialById } from './data/trials.js';
 import './trials-dashboard.js';
 import './trial-detail.js';
 
@@ -66,6 +67,197 @@ const appShellStyles = `
   app-shell .app-nav a:hover {
     color: #fff;
     text-decoration: none;
+  }
+
+  /* ── Banner ── */
+  app-shell .app-banner {
+    background: var(--color-header-bg, #151515);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative red arc */
+  app-shell .app-banner::before {
+    content: '';
+    position: absolute;
+    top: -160px;
+    right: -60px;
+    width: 480px;
+    height: 480px;
+    border: 2px solid var(--color-red, #ee0000);
+    border-radius: 50%;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  /* Decorative dot grid */
+  app-shell .app-banner::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 160px;
+    height: 120px;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px);
+    background-size: 12px 12px;
+    pointer-events: none;
+  }
+
+  app-shell .banner-inner {
+    position: relative;
+    z-index: 1;
+    max-width: var(--max-width, 1200px);
+    margin-inline: auto;
+    padding: 2rem 1.5rem 2.25rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  /* Banner breadcrumbs */
+  app-shell .banner-breadcrumbs {
+    margin-bottom: 0.75rem;
+    font-size: 0.8125rem;
+  }
+  app-shell .banner-breadcrumbs a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-weight: 400;
+  }
+  app-shell .banner-breadcrumbs a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  app-shell .banner-breadcrumbs span {
+    color: rgba(255,255,255,0.4);
+  }
+  app-shell .banner-breadcrumbs span:last-child {
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* Banner text (left side) */
+  app-shell .banner-text {
+    flex: 1;
+    min-width: 0;
+  }
+  app-shell .banner-heading {
+    font-family: var(--font-heading, sans-serif);
+    font-size: 1.75rem;
+    font-weight: 500;
+    font-style: italic;
+    margin: 0 0 0.5rem;
+    color: #fff;
+    line-height: 1.3;
+  }
+  app-shell .banner-desc {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    max-width: 48ch;
+  }
+
+  /* Banner profile (right side) */
+  app-shell .banner-profile {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  app-shell .profile-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+  app-shell .profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6b5ce7, #8b7cf7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  app-shell .profile-info {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+  app-shell .profile-email {
+    font-weight: 600;
+    color: #fff;
+  }
+  app-shell .profile-account {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.75rem;
+  }
+  app-shell .profile-manage {
+    color: var(--color-link, #0066cc) !important;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  app-shell .profile-manage:hover {
+    text-decoration: underline !important;
+  }
+
+  /* Banner action buttons */
+  app-shell .banner-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  app-shell .btn-banner-outline {
+    display: inline-block;
+    padding: 0.375rem 1rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-family: inherit;
+    border-radius: 100px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.5);
+    background: transparent;
+    color: #fff;
+    transition: background-color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  app-shell .btn-banner-outline:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #fff;
+  }
+  app-shell .banner-link {
+    color: var(--color-link, #0066cc) !important;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  app-shell .banner-link:hover {
+    text-decoration: underline !important;
+  }
+
+  /* Responsive: stack on narrow screens */
+  @media (max-width: 768px) {
+    app-shell .banner-inner {
+      flex-direction: column;
+    }
+    app-shell .banner-profile {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   /* ── Body ── */
@@ -271,6 +463,56 @@ export class AppShell extends LitElement {
     }
   }
 
+  private _renderBreadcrumbs() {
+    if (this._route.view === 'dashboard') {
+      return html`
+        <nav class="banner-breadcrumbs" aria-label="Breadcrumb">
+          <a href="#">Home</a>
+          <span> &gt; </span>
+          <a href="#">Red Hat</a>
+          <span> &gt; </span>
+          <span>Trials</span>
+        </nav>
+      `;
+    }
+    const trial = getTrialById(this._route.id);
+    return html`
+      <nav class="banner-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span> &gt; </span>
+        <a href="/">Red Hat</a>
+        <span> &gt; </span>
+        <a href="/">Trials</a>
+        ${trial
+          ? html`<span> &gt; </span><span>${trial.product}</span>`
+          : html``}
+      </nav>
+    `;
+  }
+
+  private _renderBannerText() {
+    if (this._route.view === 'dashboard') {
+      return html`
+        <div class="banner-text">
+          ${this._renderBreadcrumbs()}
+          <h1 class="banner-heading">My Red Hat</h1>
+          <p class="banner-desc">
+            Welcome to your customized Red Hat&reg; dashboard, where you can
+            easily access your most relevant information and tasks.
+          </p>
+        </div>
+      `;
+    }
+    const trial = getTrialById(this._route.id);
+    const title = trial ? trial.product : 'Trial not found';
+    return html`
+      <div class="banner-text">
+        ${this._renderBreadcrumbs()}
+        <h1 class="banner-heading" style="view-transition-name: product-name">${title}</h1>
+      </div>
+    `;
+  }
+
   render() {
     return html`
       <style>${appShellStyles}</style>
@@ -287,6 +529,25 @@ export class AppShell extends LitElement {
           </nav>
         </div>
       </header>
+      <section class="app-banner" style="view-transition-name: app-banner">
+        <div class="banner-inner">
+          ${this._renderBannerText()}
+          <div class="banner-profile">
+            <div class="profile-card">
+              <div class="profile-avatar">MP</div>
+              <div class="profile-info">
+                <div class="profile-email">mpotter@redhat.com</div>
+                <div class="profile-account">Account number: 5910538</div>
+                <a href="#" class="profile-manage">Manage account</a>
+              </div>
+            </div>
+            <div class="banner-actions">
+              <button class="btn-banner-outline" type="button">Share feedback</button>
+              <a href="#" class="banner-link">Popular resources &#8595;</a>
+            </div>
+          </div>
+        </div>
+      </section>
       <main class="app-body">
         ${this._route.view === 'dashboard'
           ? html`<trials-dashboard></trials-dashboard>`

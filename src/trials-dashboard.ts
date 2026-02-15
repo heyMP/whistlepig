@@ -13,12 +13,6 @@ const trialsDashboardStyles = `
     max-width: var(--max-width, 1200px);
     padding: var(--spacing, 1rem) 1.5rem 2rem;
   }
-  trials-dashboard .intro {
-    margin: 0 0 2rem;
-    color: var(--color-text-muted, #4a4a4a);
-    max-width: 60ch;
-    line-height: 1.6;
-  }
   trials-dashboard .section-title {
     font-family: var(--font-heading, sans-serif);
     font-size: 1.25rem;
@@ -191,24 +185,6 @@ export class TrialsDashboard extends LitElement {
     return html`
       <style>${trialsDashboardStyles}</style>
       <div class="dashboard-content" style="view-transition-name: dashboard-content">
-      <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <a href="#">Home</a>
-        <span> &gt; </span>
-        <a href="#">Red Hat</a>
-        <span> &gt; </span>
-        <span>Trials</span>
-      </nav>
-
-      <h1 class="page-title">My trials</h1>
-      <p class="intro">
-        Access your Red Hat subscriptions, manage your subscription renewals, and
-        enhance your use of the products you purchased. For any questions
-        related to your Red Hat products, subscription services, please join the
-        discussion in our
-        <a href="#">Red Hat support team</a>
-        forum.
-      </p>
-
       <h2 class="section-title">Active subscriptions</h2>
       <div class="table-card">
         <div class="table-wrap">
@@ -277,7 +253,7 @@ export class TrialsDashboard extends LitElement {
                     <td class="actions-cell">
                       <a href="/trial/${trial.id}">View more</a>
                       <button class="btn btn-primary" type="button">
-                        Renew subscription
+                        Ready to buy
                       </button>
                     </td>
                   </tr>

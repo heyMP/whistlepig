@@ -102,14 +102,6 @@ a:hover {
   animation-delay: 0.2s;
 }
 
-/* Header & footer: hold in place during view transitions (no flash) */
-::view-transition-old(app-header),
-::view-transition-new(app-header),
-::view-transition-old(app-footer),
-::view-transition-new(app-footer) {
-  animation: none;
-}
-
 /* Product name morph between dashboard table cell and detail h1 */
 ::view-transition-group(product-name) {
   animation-duration: calc(var(--animation-slide-duration) * 2.5);
