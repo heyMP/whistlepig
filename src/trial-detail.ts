@@ -15,13 +15,22 @@ const trialDetailStyles = `
     max-width: var(--max-width, 1200px);
     padding: var(--spacing, 1rem) 1.5rem 2rem;
   }
+  trial-detail .detail-card {
+    background: var(--color-bg, #fff);
+    border-radius: var(--radius-lg, 16px);
+    box-shadow: var(--shadow-card);
+    padding: 2rem;
+  }
   trial-detail .detail-block {
     margin-bottom: 1.5rem;
   }
   trial-detail .detail-label {
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-family: var(--font-heading, sans-serif);
+    font-size: 0.75rem;
+    font-weight: 700;
     color: var(--color-text-muted, #4a4a4a);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     margin: 0 0 0.25rem;
   }
   trial-detail .detail-value {
@@ -29,24 +38,7 @@ const trialDetailStyles = `
     color: var(--color-text, #151515);
   }
   trial-detail .progress-track {
-    height: 8px;
-    background: var(--color-progress-track, #e8e8e8);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: 0.25rem;
     max-width: 200px;
-  }
-  @keyframes progressFillIn {
-    from { transform: scaleX(0); }
-    to   { transform: scaleX(1); }
-  }
-  trial-detail .progress-fill {
-    height: 100%;
-    background: var(--color-primary-bg, #0066cc);
-    border-radius: 4px;
-    transition: width 0.2s ease;
-    transform-origin: left;
-    animation: progressFillIn 0.4s ease-out;
   }
   trial-detail .actions {
     display: flex;
@@ -57,26 +49,6 @@ const trialDetailStyles = `
   }
   trial-detail .actions a {
     margin-right: 0;
-  }
-  trial-detail .btn {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    font-family: inherit;
-    border-radius: var(--radius, 4px);
-    cursor: pointer;
-    text-decoration: none;
-    border: none;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  trial-detail .btn-primary {
-    background: var(--color-primary-bg, #0066cc);
-    color: white;
-  }
-  trial-detail .btn-primary:hover {
-    background: var(--color-primary-bg-hover, #004080);
-    color: white;
   }
   trial-detail .not-found {
     color: var(--color-text-muted, #4a4a4a);
@@ -106,11 +78,13 @@ export class TrialDetail extends LitElement {
           <span> &gt; </span>
           <a href="/">Trials</a>
         </nav>
-        <h1 class="page-title">Trial not found</h1>
-        <p class="not-found">
-          No trial was found for this link.
-          <a href="/">Back to trials</a>
-        </p>
+        <div class="detail-card">
+          <h1 class="page-title">Trial not found</h1>
+          <p class="not-found">
+            No trial was found for this link.
+            <a href="/">Back to trials</a>
+          </p>
+        </div>
         </div>
       `;
     }
@@ -130,46 +104,48 @@ export class TrialDetail extends LitElement {
         <span>${trial.product}</span>
       </nav>
 
-      <h1 class="page-title" style="view-transition-name: product-name">${trial.product}</h1>
+      <div class="detail-card">
+        <h1 class="page-title" style="view-transition-name: product-name">${trial.product}</h1>
 
-      <div class="detail-block">
-        <div class="detail-label">Subscription start</div>
-        <div class="detail-value">${trial.subscriptionStart}</div>
-      </div>
+        <div class="detail-block">
+          <div class="detail-label">Subscription start</div>
+          <div class="detail-value">${trial.subscriptionStart}</div>
+        </div>
 
-      ${active
-        ? html`
-            <div class="detail-block">
-              <div class="detail-label">Days left</div>
-              <div class="detail-value">${trial.daysLeft}</div>
-              <div
-                class="progress-track"
-                role="progressbar"
-                aria-valuenow="${trial.daysLeft}"
-                aria-valuemin="0"
-                aria-valuemax="${trial.totalDays}"
-              >
+        ${active
+          ? html`
+              <div class="detail-block">
+                <div class="detail-label">Days left</div>
+                <div class="detail-value">${trial.daysLeft}</div>
                 <div
-                  class="progress-fill"
-                  style="width: ${(trial.daysLeft / trial.totalDays) * 100}%"
-                ></div>
+                  class="progress-track"
+                  role="progressbar"
+                  aria-valuenow="${trial.daysLeft}"
+                  aria-valuemin="0"
+                  aria-valuemax="${trial.totalDays}"
+                >
+                  <div
+                    class="progress-fill"
+                    style="width: ${(trial.daysLeft / trial.totalDays) * 100}%"
+                  ></div>
+                </div>
               </div>
-            </div>
-          `
-        : html`
-            <div class="detail-block">
-              <div class="detail-label">Renewal open by</div>
-              <div class="detail-value">
-                <a href="#">${(trial as ExpiredTrial).renewalOpenBy}</a>
+            `
+          : html`
+              <div class="detail-block">
+                <div class="detail-label">Renewal open by</div>
+                <div class="detail-value">
+                  <a href="#">${(trial as ExpiredTrial).renewalOpenBy}</a>
+                </div>
               </div>
-            </div>
-          `}
+            `}
 
-      <div class="actions">
-        <a href="/">Back to trials</a>
-        <button class="btn btn-primary" type="button">
-          ${active ? 'Manage subscription' : 'Renew subscription'}
-        </button>
+        <div class="actions">
+          <a href="/">Back to trials</a>
+          <button class="btn btn-primary" type="button">
+            ${active ? 'Manage subscription' : 'Renew subscription'}
+          </button>
+        </div>
       </div>
       </div>
     `;

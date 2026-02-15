@@ -17,15 +17,25 @@ const trialsDashboardStyles = `
     margin: 0 0 2rem;
     color: var(--color-text-muted, #4a4a4a);
     max-width: 60ch;
+    line-height: 1.6;
   }
   trials-dashboard .section-title {
-    font-size: 1.125rem;
-    font-weight: 600;
+    font-family: var(--font-heading, sans-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
     margin: 0 0 1rem;
+  }
+
+  /* Table card container */
+  trials-dashboard .table-card {
+    background: var(--color-bg, #fff);
+    border-radius: var(--radius-lg, 16px);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    margin-bottom: 2.5rem;
   }
   trials-dashboard .table-wrap {
     overflow-x: auto;
-    margin-bottom: 2.5rem;
   }
   trials-dashboard table {
     width: 100%;
@@ -35,13 +45,20 @@ const trialsDashboardStyles = `
   trials-dashboard th,
   trials-dashboard td {
     text-align: left;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1.25rem;
     border-bottom: 1px solid var(--color-border, #d2d2d2);
     vertical-align: middle;
   }
+  trials-dashboard tbody tr:last-child td {
+    border-bottom: none;
+  }
   trials-dashboard th {
     font-weight: 600;
-    color: var(--color-text, #151515);
+    color: var(--color-text-muted, #4a4a4a);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--color-bg, #fff);
   }
   trials-dashboard .th-with-icon {
     display: inline-flex;
@@ -65,24 +82,7 @@ const trialsDashboardStyles = `
     min-width: 140px;
   }
   trials-dashboard .progress-track {
-    height: 8px;
-    background: var(--color-progress-track, #e8e8e8);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: 0.25rem;
     min-width: 80px;
-  }
-  @keyframes progressFillIn {
-    from { transform: scaleX(0); }
-    to   { transform: scaleX(1); }
-  }
-  trials-dashboard .progress-fill {
-    height: 100%;
-    background: var(--color-primary-bg, #0066cc);
-    border-radius: 4px;
-    transition: width 0.2s ease;
-    transform-origin: left;
-    animation: progressFillIn 0.4s ease-out;
   }
   trials-dashboard .actions-cell {
     white-space: nowrap;
@@ -90,43 +90,17 @@ const trialsDashboardStyles = `
   trials-dashboard .actions-cell a {
     margin-right: 1rem;
   }
-  trials-dashboard .btn {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    font-family: inherit;
-    border-radius: var(--radius, 4px);
-    cursor: pointer;
-    text-decoration: none;
-    border: none;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  trials-dashboard .btn-primary {
-    background: var(--color-primary-bg, #0066cc);
-    color: white;
-  }
-  trials-dashboard .btn-primary:hover {
-    background: var(--color-primary-bg-hover, #004080);
-    color: white;
-  }
-  trials-dashboard .btn-outline {
-    background: transparent;
-    color: var(--color-primary-bg, #0066cc);
-    border: 1px solid var(--color-primary-bg, #0066cc);
-  }
-  trials-dashboard .btn-outline:hover {
-    background: rgba(0, 102, 204, 0.08);
-  }
+
+  /* Learning section */
   trials-dashboard .learning-section {
     margin-top: 2.5rem;
     padding-top: 2rem;
-    border-top: 1px solid var(--color-border, #d2d2d2);
   }
   trials-dashboard .learning-intro {
     margin: 0 0 1.5rem;
     color: var(--color-text-muted, #4a4a4a);
     max-width: 50ch;
+    line-height: 1.6;
   }
   trials-dashboard .cards-grid {
     display: grid;
@@ -135,27 +109,34 @@ const trialsDashboardStyles = `
     margin-bottom: 1.5rem;
   }
   trials-dashboard .card {
-    padding: 1.25rem;
+    padding: 1.5rem;
     background: var(--color-bg, #fff);
-    border: 1px solid var(--color-border, #d2d2d2);
-    border-radius: var(--radius, 4px);
+    border: none;
+    border-radius: var(--radius-lg, 16px);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  trials-dashboard .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
   }
   trials-dashboard .card-title {
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: var(--font-heading, sans-serif);
+    font-size: 1.0625rem;
+    font-weight: 700;
     margin: 0 0 0.5rem;
   }
   trials-dashboard .card-desc {
     font-size: 0.875rem;
     color: var(--color-text-muted, #4a4a4a);
-    margin: 0 0 1rem;
-    line-height: 1.5;
+    margin: 0 0 1.25rem;
+    line-height: 1.6;
   }
   trials-dashboard .banner {
-    background: var(--color-banner-bg, #1a1a2e);
+    background: var(--color-banner-bg, #151515);
     color: white;
-    padding: 2rem;
-    border-radius: var(--radius, 4px);
+    padding: 2.5rem;
+    border-radius: var(--radius-lg, 16px);
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -167,27 +148,28 @@ const trialsDashboardStyles = `
     }
   }
   trials-dashboard .banner-content h3 {
+    font-family: var(--font-heading, sans-serif);
     margin: 0 0 0.5rem;
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.375rem;
+    font-weight: 700;
   }
   trials-dashboard .banner-content p {
-    margin: 0 0 1rem;
+    margin: 0 0 1.25rem;
     font-size: 0.875rem;
-    opacity: 0.9;
-    line-height: 1.5;
+    opacity: 0.85;
+    line-height: 1.6;
   }
   trials-dashboard .banner .btn-outline {
     color: white;
     border-color: white;
   }
   trials-dashboard .banner .btn-outline:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
   }
   trials-dashboard .banner-image {
     min-height: 120px;
     background: rgba(255, 255, 255, 0.06);
-    border-radius: var(--radius, 4px);
+    border-radius: var(--radius-lg, 16px);
     display: none;
   }
   @media (min-width: 640px) {
@@ -228,78 +210,82 @@ export class TrialsDashboard extends LitElement {
       </p>
 
       <h2 class="section-title">Active subscriptions</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Subscription start</th>
-              <th>Days left</th>
-              <th>Next steps and resources</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${activeTrials.map(
-              (trial) => html`
-                <tr>
-                  <td data-trial-product="${trial.id}">${trial.product}</td>
-                  <td>${trial.subscriptionStart}</td>
-                  <td class="days-cell">
-                    ${trial.daysLeft}
-                    <div class="progress-track">
-                      <div
-                        class="progress-fill"
-                        style="width: ${(trial.daysLeft / trial.totalDays) * 100}%"
-                      ></div>
-                    </div>
-                  </td>
-                  <td class="actions-cell">
-                    <a href="/trial/${trial.id}">View more</a>
-                    <button class="btn btn-primary" type="button">
-                      Manage subscription
-                    </button>
-                  </td>
-                </tr>
-              `
-            )}
-          </tbody>
-        </table>
+      <div class="table-card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Subscription start</th>
+                <th>Days left</th>
+                <th>Next steps and resources</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${activeTrials.map(
+                (trial) => html`
+                  <tr>
+                    <td data-trial-product="${trial.id}">${trial.product}</td>
+                    <td>${trial.subscriptionStart}</td>
+                    <td class="days-cell">
+                      ${trial.daysLeft}
+                      <div class="progress-track">
+                        <div
+                          class="progress-fill"
+                          style="width: ${(trial.daysLeft / trial.totalDays) * 100}%"
+                        ></div>
+                      </div>
+                    </td>
+                    <td class="actions-cell">
+                      <a href="/trial/${trial.id}">View more</a>
+                      <button class="btn btn-primary" type="button">
+                        Manage subscription
+                      </button>
+                    </td>
+                  </tr>
+                `
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <h2 class="section-title">Expired subscriptions</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Subscription start</th>
-              <th>
-                <span class="th-with-icon">
-                  Renewal open by
-                  <span class="info-icon" title="Renewal window">i</span>
-                </span>
-              </th>
-              <th>Next steps and resources</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${expiredTrials.map(
-              (trial) => html`
-                <tr>
-                  <td data-trial-product="${trial.id}">${trial.product}</td>
-                  <td>${trial.subscriptionStart}</td>
-                  <td><a href="#">${trial.renewalOpenBy}</a></td>
-                  <td class="actions-cell">
-                    <a href="/trial/${trial.id}">View more</a>
-                    <button class="btn btn-primary" type="button">
-                      Renew subscription
-                    </button>
-                  </td>
-                </tr>
-              `
-            )}
-          </tbody>
-        </table>
+      <div class="table-card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Subscription start</th>
+                <th>
+                  <span class="th-with-icon">
+                    Renewal open by
+                    <span class="info-icon" title="Renewal window">i</span>
+                  </span>
+                </th>
+                <th>Next steps and resources</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${expiredTrials.map(
+                (trial) => html`
+                  <tr>
+                    <td data-trial-product="${trial.id}">${trial.product}</td>
+                    <td>${trial.subscriptionStart}</td>
+                    <td><a href="#">${trial.renewalOpenBy}</a></td>
+                    <td class="actions-cell">
+                      <a href="/trial/${trial.id}">View more</a>
+                      <button class="btn btn-primary" type="button">
+                        Renew subscription
+                      </button>
+                    </td>
+                  </tr>
+                `
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <section class="learning-section">
