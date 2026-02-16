@@ -185,7 +185,7 @@ export class TrialsDashboard extends LitElement {
     return html`
       <style>${trialsDashboardStyles}</style>
       <div class="dashboard-content">
-      <h2 class="section-title">Active subscriptions</h2>
+      <h2 class="section-title x-hide">Active subscriptions</h2>
       <div class="table-card">
         <div class="table-wrap">
           <table>
