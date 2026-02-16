@@ -72,12 +72,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* View Transitions API: slide + fade between dashboard and trial detail */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-}
-
 
 /**
  * Breadcrumbs
@@ -151,8 +145,13 @@ a:hover {
  * Shared progress bar styles
  */
 @keyframes progressFillIn {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .progress-track {
@@ -171,3 +170,27 @@ a:hover {
   transform-origin: left;
   animation: progressFillIn 0.4s ease-out;
 }
+
+/**
+* VIEW TRIANSITIONS
+*/
+.app-header {
+  view-transition-name: app-header;
+}
+
+.app-banner {
+  view-transition-name: app-banner;
+  height: auto;
+  mix-blend-mode: normal;
+}
+::view-transition-old(app-banner),
+::view-transition-new(app-banner) {
+}
+
+/* .app-body { */
+/*   view-transition-name: app-body; */
+/* } */
+/* ::view-transition-old(app-body), */
+/* ::view-transition-new(app-body) { */
+/*   animation: none; */
+/* } */

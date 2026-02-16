@@ -550,8 +550,8 @@ export class AppShell extends LitElement {
       </section>
       <main class="app-body">
         ${this._route.view === 'dashboard'
-          ? html`<trials-dashboard></trials-dashboard>`
-          : html`<trial-detail trialId="${this._route.id}"></trial-detail>`}
+          ? html`<trials-dashboard class="app-body-inner"></trials-dashboard>`
+          : html`<trial-detail trialId="${this._route.id}" class="app-body-inner"></trial-detail>`}
       </main>
       <footer class="app-footer">
         <div class="footer-columns">
