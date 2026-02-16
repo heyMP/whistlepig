@@ -516,7 +516,7 @@ export class AppShell extends LitElement {
   render() {
     return html`
       <style>${appShellStyles}</style>
-      <header class="app-header" style="view-transition-name: app-header">
+      <header class="app-header">
         <div class="app-header-inner">
           <a href="/" class="app-logo">
             <span class="logo-hat" aria-hidden="true">&#9650;</span>
@@ -529,7 +529,7 @@ export class AppShell extends LitElement {
           </nav>
         </div>
       </header>
-      <section class="app-banner" style="view-transition-name: app-banner">
+      <section class="app-banner">
         <div class="banner-inner">
           ${this._renderBannerText()}
           <div class="banner-profile">
@@ -553,7 +553,7 @@ export class AppShell extends LitElement {
           ? html`<trials-dashboard></trials-dashboard>`
           : html`<trial-detail trialId="${this._route.id}"></trial-detail>`}
       </main>
-      <footer class="app-footer" style="view-transition-name: app-footer">
+      <footer class="app-footer">
         <div class="footer-columns">
           <div>
             <h4 class="footer-col-title">Platforms</h4>

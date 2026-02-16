@@ -184,7 +184,7 @@ export class TrialsDashboard extends LitElement {
   render() {
     return html`
       <style>${trialsDashboardStyles}</style>
-      <div class="dashboard-content" style="view-transition-name: dashboard-content">
+      <div class="dashboard-content">
       <h2 class="section-title">Active subscriptions</h2>
       <div class="table-card">
         <div class="table-wrap">
@@ -215,7 +215,7 @@ export class TrialsDashboard extends LitElement {
                     <td class="actions-cell">
                       <a href="/trial/${trial.id}">View more</a>
                       <button class="btn btn-primary" type="button">
-                        Manage subscription
+                        Ready to buy
                       </button>
                     </td>
                   </tr>

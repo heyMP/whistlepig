@@ -70,7 +70,7 @@ export class TrialDetail extends LitElement {
     if (!trial) {
       return html`
         <style>${trialDetailStyles}</style>
-        <div class="trial-detail-content" style="view-transition-name: trial-detail-content">
+        <div class="trial-detail-content" style="">
         <div class="detail-card">
           <p class="not-found">
             No trial was found for this link.
@@ -85,7 +85,7 @@ export class TrialDetail extends LitElement {
 
     return html`
       <style>${trialDetailStyles}</style>
-      <div class="trial-detail-content" style="view-transition-name: trial-detail-content">
+      <div class="trial-detail-content">
       <div class="detail-card">
 
         <div class="detail-block">
@@ -124,7 +124,7 @@ export class TrialDetail extends LitElement {
         <div class="actions">
           <a href="/">Back to trials</a>
           <button class="btn btn-primary" type="button">
-            ${active ? 'Manage subscription' : 'Ready to buy'}
+            Ready to buy
           </button>
         </div>
       </div>
