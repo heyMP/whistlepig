@@ -176,16 +176,40 @@ a:hover {
 */
 .app-header {
   view-transition-name: app-header;
+  /* Crazy fix for little thin line at the bottom of the header when view transitioning */
+  /* https://youtu.be/oXSFwix7eR8?t=2195 */
+  border-image: conic-gradient(var(--color-header-bg) 0 0) fill 0 // 0 0 1px 0;
 }
 
 .app-banner {
   view-transition-name: app-banner;
   height: auto;
   mix-blend-mode: normal;
+  border-image: conic-gradient(var(--color-header-bg) 0 0) fill 0 // 0 0 100px 0;
 }
-::view-transition-old(app-banner),
-::view-transition-new(app-banner) {
+
+::view-transition-group(product-name) {
+  animation-duration: .8s;
+  z-index: 5;
 }
+
+::view-transition-old(product-name) {
+  animation-duration: .8s;
+  z-index: 0;
+}
+
+.app-body {
+  view-transition-name: app-body;
+}
+
+::view-transition-group(app-body) {
+  /* animation-duration: 5s; */
+}
+
+/* ::view-transition-old(product-name), */
+/* ::view-transition-new(product-name) { */
+/*   animation-duration: 5s; */
+/* } */
 
 /* .app-body { */
 /*   view-transition-name: app-body; */
