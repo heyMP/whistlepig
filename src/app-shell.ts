@@ -484,8 +484,8 @@ export class AppShell extends LitElement {
         <span> &gt; </span>
         <a href="/">Trials</a>
         ${trial
-          ? html`<span> &gt; </span><span>${trial.product}</span>`
-          : html``}
+        ? html`<span> &gt; </span><span>${trial.product}</span>`
+        : html``}
       </nav>
     `;
   }
@@ -495,10 +495,9 @@ export class AppShell extends LitElement {
       return html`
         <div class="banner-text">
           ${this._renderBreadcrumbs()}
-          <h1 class="banner-heading">My Red Hat</h1>
+          <h1 class="banner-heading">My Trials</h1>
           <p class="banner-desc">
-            Welcome to your customized Red Hat&reg; dashboard, where you can
-            easily access your most relevant information and tasks.
+Welcome to your trials page. Here, you can easily keep track of your activity, understand how to get the most out of your trials, and convert any of your work to new or existing production instances. If you have questions, check out our FAQs page. If you still require assistance, please don’t hesitate to contact our support team.
           </p>
         </div>
       `;
@@ -550,8 +549,8 @@ export class AppShell extends LitElement {
       </section>
       <main class="app-body">
         ${this._route.view === 'dashboard'
-          ? html`<trials-dashboard class="app-body-inner"></trials-dashboard>`
-          : html`<trial-detail trialId="${this._route.id}" class="app-body-inner"></trial-detail>`}
+        ? html`<trials-dashboard class="app-body-inner"></trials-dashboard>`
+        : html`<trial-detail trialId="${this._route.id}" class="app-body-inner"></trial-detail>`}
       </main>
       <footer class="app-footer">
         <div class="footer-columns">
