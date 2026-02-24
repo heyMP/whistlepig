@@ -271,7 +271,6 @@ const appShellStyles = `
   /* ── Footer ── */
   app-shell .app-footer {
     background: var(--color-footer-bg, #151515);
-    margin-top: 3rem;
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.8125rem;
     line-height: 1.6;
@@ -548,9 +547,11 @@ Welcome to your trials page. Here, you can easily keep track of your activity, u
         </div>
       </section>
       <main class="app-body">
-        ${this._route.view === 'dashboard'
-        ? html`<trials-dashboard class="app-body-inner"></trials-dashboard>`
-        : html`<trial-detail trialId="${this._route.id}" class="app-body-inner"></trial-detail>`}
+        <div class="app-body-inner">
+          ${this._route.view === 'dashboard'
+          ? html`<trials-dashboard class="app-body-inner"></trials-dashboard>`
+          : html`<trial-detail trialId="${this._route.id}" class="app-body-inner"></trial-detail>`}
+        </div>
       </main>
       <footer class="app-footer">
         <div class="footer-columns">

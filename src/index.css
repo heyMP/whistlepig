@@ -61,7 +61,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--color-surface);
+  background-color: var(--color-banner-bg);
   color: var(--color-text);
 }
 
@@ -190,10 +190,27 @@ a:hover {
 /**
 * VIEW TRIANSITIONS
 */
+::view-transition-group(root) {
+  z-index: auto !important;
+}
+
+::view-transition-image-pair(root) {
+  isolation: isolate;
+  will-change: clip-path;
+  z-index: 1;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+}
+
+::view-transition-group(product-name) {
+  animation-duration: .5s;
+  z-index: 5;
+}
+
 .app-header {
   view-transition-name: app-header;
-  /* Crazy fix for little thin line at the bottom of the header when view transitioning */
-  /* https://youtu.be/oXSFwix7eR8?t=2195 */
   border-image: conic-gradient(var(--color-header-bg) 0 0) fill 0 // 0 0 1px 0;
 }
 
@@ -203,29 +220,17 @@ a:hover {
   mix-blend-mode: normal;
   border-image: conic-gradient(var(--color-header-bg) 0 0) fill 0 // 0 0 100px 0;
 }
-
-::view-transition-group(product-name) {
-  animation-duration: .3s;
-  z-index: 5;
-}
+/**/
+/* .app-banner-inner { */
+/*   view-transition-name: app-banner-inner; */
+/* } */
 
 .app-body {
+  background-color: var(--color-surface);
   view-transition-name: app-body;
+  border-image: conic-gradient(var(--color-surface) 0 0) fill 0 // 0 50dvw 0 50dvw;
 }
 
-::view-transition-group(app-body) {
-  /* animation-duration: 5s; */
-}
-
-/* ::view-transition-old(product-name), */
-/* ::view-transition-new(product-name) { */
-/*   animation-duration: 5s; */
-/* } */
-
-/* .app-body { */
-/*   view-transition-name: app-body; */
-/* } */
-/* ::view-transition-old(app-body), */
-/* ::view-transition-new(app-body) { */
-/*   animation: none; */
+/* .app-footer { */
+/*   view-transition-name: app-footer; */
 /* } */
